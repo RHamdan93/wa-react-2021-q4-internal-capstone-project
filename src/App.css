@@ -2,6 +2,43 @@
   text-align: center;
 }
 
+.topBar {
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  background: tomato;
+}
+
+.topBar-title {
+  text-align: left;
+  margin: 0 100px 0 0;
+  font-size: 20px;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.topBar > div{
+  flex-grow: 2;
+}
+
+.topBar > i {
+  padding: 0 5px 0 10px;
+  margin: auto;
+  font-size: 200%;
+}
+
+.content{
+  background: gold;
+  padding: 20px 0 0 0 ;
+}
+
+footer {
+  background: lightgreen;
+}
+footer > p {
+  margin: 0;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
