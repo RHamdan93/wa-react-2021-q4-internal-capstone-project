@@ -1,4 +1,5 @@
 import SearchBar from "./SearchBar";
+import "./Header.css";
 import * as Constants from "./Constants";
 
 const Header = function ({ setCurrentPage }) {

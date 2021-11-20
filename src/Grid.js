@@ -20,18 +20,22 @@ const Grid = ({ gridItems }) => {
   return (
     <div>
       <GridContainer>
-        {gridItems.results.map((gridItem) => (
-          <GridItemDiv key={gridItem.id}>
-            <p>{gridItem.data.name}</p>
-            <p>{`Category: ${gridItem.data.category.name}`}</p>
-            <p>{`$${gridItem.data.price}`}</p>
-            <img
-              style={{ maxWidth: "100%" }}
-              src={gridItem.data.mainimage.url}
-              alt={gridItem.data.mainimage.alt}
-            ></img>
-          </GridItemDiv>
-        ))}
+        {gridItems.results.map((gridItem) => {
+          const { name, category, price, mainimage } = gridItem.data;
+
+          return (
+            <GridItemDiv key={gridItem.id}>
+              <p>{name}</p>
+              <p>{`Category: ${category.name}`}</p>
+              <p>{`$${price}`}</p>
+              <img
+                style={{ maxWidth: "100%" }}
+                src={mainimage.url}
+                alt={mainimage.alt}
+              ></img>
+            </GridItemDiv>
+          );
+        })}
       </GridContainer>
       <div>
         <button>&lt;</button>
