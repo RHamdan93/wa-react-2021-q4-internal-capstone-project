@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import GridItem from "./GridItem";
 
 const GridContainer = styled.div`
   display: grid;
@@ -8,34 +9,13 @@ const GridContainer = styled.div`
   min-width: 0;
 `;
 
-const GridItemDiv = styled.div`
-  background-color: rgba(255, 255, 255, 0.8);
-  padding: 20px;
-  font-size: 30px;
-  text-align: center;
-  border: 2px solid black;
-`;
-
 const Grid = ({ gridItems }) => {
   return (
     <div>
       <GridContainer>
-        {gridItems.results.map((gridItem) => {
-          const { name, category, price, mainimage } = gridItem.data;
-
-          return (
-            <GridItemDiv key={gridItem.id}>
-              <p>{name}</p>
-              <p>{`Category: ${category.name}`}</p>
-              <p>{`$${price}`}</p>
-              <img
-                style={{ maxWidth: "100%" }}
-                src={mainimage.url}
-                alt={mainimage.alt}
-              ></img>
-            </GridItemDiv>
-          );
-        })}
+        {gridItems.results.map((gridItem) => (
+          <GridItem key={gridItem.id} {...gridItem.data} />
+        ))}
       </GridContainer>
       <div>
         <button>&lt;</button>

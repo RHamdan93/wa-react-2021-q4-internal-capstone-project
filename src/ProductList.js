@@ -3,13 +3,13 @@ import styled from "styled-components";
 import Grid from "./Grid";
 
 const Sidebar = styled.div`
-  height: 400px;
-  width: 150px;
+  height: 100%;
+  width: 200px;
   position: sticky;
   top: 0px;
   float: left;
-  padding-top: 40px;
   background-color: lightblue;
+  padding: 10px 0 20px 0;
 `;
 
 const Content = styled.div`
@@ -18,7 +18,19 @@ const Content = styled.div`
 `;
 
 const FilterButton = styled.button`
-  background-color: ${(props) => (props.active ? "darkGray" : "lightgray")};
+  width: 90%;
+  margin: 5px;
+  background-color: ${(props) =>
+    props.active ? "rgb(105, 176, 205)" : "rgb(135, 206, 235)"};
+
+  &:hover {
+    background-color: rgb(255, 255, 255, 0.3);
+  }
+`;
+
+const FilterTittle = styled.div`
+  font-weight: bold;
+  margin: 0px 0 10px 0;
 `;
 
 const filterByCategory = (setActiveFilters, activeFilters, id) => {
@@ -46,25 +58,28 @@ const ProductList = ({ products, filterTypes }) => {
   };
 
   return (
-    <div>
+    <>
       <Sidebar>
-        {filterTypes.map((category) => (
-          <div key={category.id}>
-            <FilterButton
-              onClick={() =>
-                filterByCategory(setActiveFilters, activeFilters, category.id)
-              }
-              active={activeFilters.includes(category.id)}
-            >
-              {category.data.name}
-            </FilterButton>
-          </div>
-        ))}
+        <FilterTittle>Filters</FilterTittle>
+        <div>
+          {filterTypes.map((category) => (
+            <div key={category.id}>
+              <FilterButton
+                onClick={() =>
+                  filterByCategory(setActiveFilters, activeFilters, category.id)
+                }
+                active={activeFilters.includes(category.id)}
+              >
+                {category.data.name}
+              </FilterButton>
+            </div>
+          ))}
+        </div>
       </Sidebar>
       <Content>
         <Grid gridItems={filteredProducts}></Grid>
       </Content>
-    </div>
+    </>
   );
 };
 
