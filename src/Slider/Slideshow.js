@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import "./Slideshow.css";
 
 const SlideshowContainer = styled.div`
   margin: 20px auto;
@@ -8,10 +7,32 @@ const SlideshowContainer = styled.div`
   max-width: 500px;
 `;
 
-const Slide = styled.div`
+const SlideshowSlider = styled.div`
+  transform: translate3d(${(props) => -props.index * 100}%, 0, 0);
+  white-space: nowrap;
+  transition: ease 1000ms;
+
+  & > div {
+    display: inline-block;
+    width: 100%;
+    border-radius: 40px;
+  }
+
+  & > div > img {
+    width: 100%;
+  }
+`;
+
+const SlideshowDot = styled.div`
   display: inline-block;
-  width: 100%;
-  border-radius: 40px;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+
+  cursor: pointer;
+  margin: 15px 7px 0px;
+
+  background-color: ${(props) => (props.active ? "#303030" : "#c4c4c4")};
 `;
 
 function Slideshow({ slides }) {
@@ -19,30 +40,23 @@ function Slideshow({ slides }) {
 
   return (
     <SlideshowContainer>
-      <div
-        className="slideshowSlider"
-        style={{
-          transform: `translate3d(${-index * 100}%, 0, 0)`,
-          whiteSpace: "nowrap",
-          transition: "ease 1000ms",
-        }}
-      >
+      <SlideshowSlider index={index}>
         {slides.map((slide, index) => (
-          <Slide key={index}>
-            <img src={slide.url} alt={slide.alt} style={{ width: "100%" }} />
-          </Slide>
+          <div key={index}>
+            <img src={slide.url} alt={slide.alt} />
+          </div>
         ))}
-      </div>
+      </SlideshowSlider>
 
-      <div style={{ textAlign: "center" }}>
+      <div>
         {slides.map((_, idx) => (
-          <div
+          <SlideshowDot
             key={idx}
-            className={`slideshowDot${index === idx ? " active" : ""}`}
+            active={index === idx}
             onClick={() => {
               setIndex(idx);
             }}
-          ></div>
+          ></SlideshowDot>
         ))}
       </div>
     </SlideshowContainer>

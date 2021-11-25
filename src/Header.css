@@ -1,0 +1,31 @@
+.topBar {
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    background: tomato;
+  }
+  
+  .topBar-title {
+    text-align: left;
+  }
+
+  .topBar-title > button {
+    text-align: left;
+    margin: 0 100px 0 0;
+    font-size: 20px;
+    font-weight: bold;
+    font-style: italic;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+  }
+  
+  .topBar > div{
+    flex-grow: 2;
+  }
+  
+  .topBar > i {
+    padding: 0 5px 0 10px;
+    margin: auto;
+    font-size: 200%;
+  }
