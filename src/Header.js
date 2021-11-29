@@ -1,15 +1,13 @@
 import SearchBar from "./SearchBar";
 import "./Header.css";
-import * as Constants from "./Constants";
+import { Link } from "react-router-dom";
 
-const Header = function ({ setCurrentPage }) {
+const Header = function () {
   return (
     <header>
       <div className="topBar">
         <div className="topBar-title">
-          <button onClick={() => setCurrentPage(Constants.sitePages.HOME)}>
-            Generic Furniture Store
-          </button>
+          <Link to="/">Generic Furniture Store</Link>
         </div>
         <SearchBar />
         <i className="fas fa-shopping-cart"></i>

@@ -3,19 +3,19 @@ import "./App.css";
 import Header from "./Header";
 import Content from "./Content";
 import Footer from "./Footer";
-import { useState } from "react";
-import * as Constants from "./Constants";
+import { BrowserRouter as Router } from "react-router-dom";
 
 function App() {
   //const { data, isLoading } = useFeaturedBanners();
-  const [currentPage, setCurrentPage] = useState(Constants.sitePages.HOME);
 
   return (
-    <div className="App">
-      <Header {...{ setCurrentPage }} />
-      <Content {...{ currentPage, setCurrentPage }} />
-      <Footer />
-    </div>
+    <Router basename="/wa-react-2021-q4-internal-capstone-project">
+      <div className="App">
+        <Header />
+        <Content />
+        <Footer />
+      </div>
+    </Router>
   );
 }
 

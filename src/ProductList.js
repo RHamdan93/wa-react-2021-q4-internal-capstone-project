@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import { useProductCategories } from "./utils/hooks/useProductCategories";
+import { useProducts } from "./utils/hooks/useProducts";
 import styled from "styled-components";
 import Grid from "./Grid";
 
@@ -45,35 +48,55 @@ const filterByCategory = (setActiveFilters, activeFilters, id) => {
   }
 };
 
-const ProductList = ({ products, filterTypes }) => {
-  const [activeFilters, setActiveFilters] = useState([]);
+const ProductList = () => {
+  const [searchParams] = useSearchParams();
+  const categoryFilter = searchParams.get("category");
 
-  let filteredProducts = {
-    results:
-      activeFilters.length === 0
-        ? products.results
-        : products.results.filter((product) =>
-            activeFilters.includes(product.data.category.id)
-          ),
-  };
+  const [activeFilters, setActiveFilters] = useState(
+    categoryFilter !== null ? [categoryFilter] : []
+  );
+
+  const { data: productsData, isLoading: isLoadingProducts } = useProducts();
+
+  const { data: categoriesData, isLoading: isLoadingCategories } =
+    useProductCategories();
+
+  let filteredProducts = [];
+
+  if (isLoadingProducts === false) {
+    filteredProducts = {
+      results:
+        activeFilters.length === 0
+          ? productsData.results
+          : productsData.results.filter((product) =>
+              activeFilters.includes(product.data.category.id)
+            ),
+    };
+  }
 
   return (
     <>
       <Sidebar>
         <FilterTittle>Filters</FilterTittle>
         <div>
-          {filterTypes.map((category) => (
-            <div key={category.id}>
-              <FilterButton
-                onClick={() =>
-                  filterByCategory(setActiveFilters, activeFilters, category.id)
-                }
-                active={activeFilters.includes(category.id)}
-              >
-                {category.data.name}
-              </FilterButton>
-            </div>
-          ))}
+          {isLoadingCategories
+            ? null
+            : categoriesData.results.map((category) => (
+                <div key={category.id}>
+                  <FilterButton
+                    onClick={() =>
+                      filterByCategory(
+                        setActiveFilters,
+                        activeFilters,
+                        category.id
+                      )
+                    }
+                    active={activeFilters.includes(category.id)}
+                  >
+                    {category.data.name}
+                  </FilterButton>
+                </div>
+              ))}
         </div>
       </Sidebar>
       <Content>

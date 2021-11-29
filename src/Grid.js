@@ -13,9 +13,10 @@ const Grid = ({ gridItems }) => {
   return (
     <div>
       <GridContainer>
-        {gridItems.results.map((gridItem) => (
-          <GridItem key={gridItem.id} {...gridItem.data} />
-        ))}
+        {gridItems.results !== undefined &&
+          gridItems.results.map((gridItem) => (
+            <GridItem key={gridItem.id} {...gridItem} />
+          ))}
       </GridContainer>
       <div>
         <button>&lt;</button>
