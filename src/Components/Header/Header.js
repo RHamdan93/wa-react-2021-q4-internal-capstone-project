@@ -1,6 +1,7 @@
 import SearchBar from "../SearchBar/SearchBar";
 import "./Header.css";
 import { Link } from "react-router-dom";
+import ShoppingCartBadge from "../ShoppingCartBadge/ShoppingCartBadge";
 
 const Header = function () {
   return (
@@ -10,7 +11,7 @@ const Header = function () {
           <Link to="/">Generic Furniture Store</Link>
         </div>
         <SearchBar />
-        <i className="fas fa-shopping-cart"></i>
+        <ShoppingCartBadge />
       </div>
     </header>
   );
