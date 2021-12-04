@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
-import { useProductById } from "./utils/hooks/useProductById";
-import { useProductCategories } from "./utils/hooks/useProductCategories";
-import Slideshow from "./Slider/Slideshow";
+import { useProductById } from "../../utils/hooks/useProductById";
+import { useProductCategories } from "../../utils/hooks/useProductCategories";
+import Slideshow from "../Slider/Slideshow";
 
 const ShopcartButton = styled.button`
   display: block;

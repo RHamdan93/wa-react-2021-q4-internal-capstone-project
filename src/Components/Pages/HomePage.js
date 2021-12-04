@@ -1,10 +1,10 @@
-import Slideshow from "./Slider/Slideshow";
-import Grid from "./Grid";
+import Slideshow from "../Slider/Slideshow";
+import Grid from "../Grid/Grid";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { useFeaturedBanners } from "./utils/hooks/useFeaturedBanners";
-import { useProductCategories } from "./utils/hooks/useProductCategories";
-import { useFeaturedProducts } from "./utils/hooks/useFeaturedProducts";
+import { useFeaturedBanners } from "../../utils/hooks/useFeaturedBanners";
+import { useProductCategories } from "../../utils/hooks/useProductCategories";
+import { useFeaturedProducts } from "../../utils/hooks/useFeaturedProducts";
 
 const AllProductsLink = styled(Link)`
   display: inline-block;

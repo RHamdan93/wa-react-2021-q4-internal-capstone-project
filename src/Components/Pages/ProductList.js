@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { useProductCategories } from "./utils/hooks/useProductCategories";
-import { useProducts } from "./utils/hooks/useProducts";
+import { useProductCategories } from "../../utils/hooks/useProductCategories";
+import { useProducts } from "../../utils/hooks/useProducts";
 import styled from "styled-components";
-import Grid from "./Grid";
+import Grid from "../Grid/Grid";
 
 const Sidebar = styled.div`
   height: 100%;
