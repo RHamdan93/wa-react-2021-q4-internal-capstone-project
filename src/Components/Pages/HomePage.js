@@ -2,9 +2,9 @@ import Slideshow from "../Slider/Slideshow";
 import Grid from "../Grid/Grid";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { useFeaturedBanners } from "../../utils/hooks/useFeaturedBanners";
-import { useProductCategories } from "../../utils/hooks/useProductCategories";
-import { useFeaturedProducts } from "../../utils/hooks/useFeaturedProducts";
+import { useFeaturedBanners } from "../../utils/hooks/API/useFeaturedBanners";
+import { useFeaturedProducts } from "../../utils/hooks/API/useFeaturedProducts";
+import { usePopulateProducsWithCategories } from "../../utils/usePopulateProducsWithCategories";
 
 const AllProductsLink = styled(Link)`
   display: inline-block;
@@ -25,10 +25,13 @@ const AllProductsLink = styled(Link)`
 const HomePage = () => {
   const { data: featuredBannersData, isLoading: isLoadingFeaturedBanners } =
     useFeaturedBanners();
-  const { data: categoriesData, isLoading: isLoadingCategories } =
-    useProductCategories();
-  const { data: featuredProductsData, isLoading: isLoadingFeaturedProducts } =
-    useFeaturedProducts();
+
+  const {
+    productsData,
+    categoriesData,
+    isLoadingProducts,
+    isLoadingCategories,
+  } = usePopulateProducsWithCategories(useFeaturedProducts);
 
   let featuredBannersSlides = [];
   let productCategoriesSlides = [];
@@ -48,27 +51,13 @@ const HomePage = () => {
       alt: banner.data.main_image.alt,
       navigateTo: `/products?category=${banner.id}`,
     }));
-
-    let categoryDictionary = Object.fromEntries(
-      categoriesData.results.map((category) => [
-        category.id,
-        category.data.name,
-      ])
-    );
-
-    if (isLoadingFeaturedProducts === false) {
-      featuredProductsData.results.forEach((product) => {
-        product.data.category.name =
-          categoryDictionary[product.data.category.id];
-      });
-    }
   }
 
   return (
     <>
       <Slideshow slides={featuredBannersSlides} />
       <Slideshow slides={productCategoriesSlides} />
-      {!isLoadingFeaturedProducts && <Grid gridItems={featuredProductsData} />}
+      {!isLoadingProducts && <Grid {...{ gridItems: productsData }} />}
       <AllProductsLink to="/products">View All Products</AllProductsLink>
     </>
   );

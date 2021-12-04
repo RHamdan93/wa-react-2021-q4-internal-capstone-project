@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
-import { useProductById } from "../../utils/hooks/useProductById";
-import { useProductCategories } from "../../utils/hooks/useProductCategories";
+import { useProductById } from "../../utils/hooks/API/useProductById";
+import { useProductCategories } from "../../utils/hooks/API/useProductCategories";
 import Slideshow from "../Slider/Slideshow";
 
 const ShopcartButton = styled.button`

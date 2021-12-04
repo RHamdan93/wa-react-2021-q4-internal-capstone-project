@@ -12,7 +12,7 @@ const Content = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/products" element={<ProductList />} />
         <Route path="/products/:productId" element={<ProductDetails />} />
-        <Route path="/search?q={searchTerm}" element={<SearchResults />} />
+        <Route path="/search" element={<SearchResults />} />
         <Route path="*" element={<h1>Invalid page!</h1>} />
       </Routes>
     </section>

@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { useProductCategories } from "../../utils/hooks/useProductCategories";
-import { useProducts } from "../../utils/hooks/useProducts";
+import { useProducts } from "../../utils/hooks/API/useProducts";
+import { usePopulateProducsWithCategories } from "../../utils/usePopulateProducsWithCategories";
 import styled from "styled-components";
 import Grid from "../Grid/Grid";
+import CategoryFilters from "../CategoryFilter/CategoryFilters";
 
 const Sidebar = styled.div`
   height: 100%;
@@ -20,35 +21,30 @@ const Content = styled.div`
   padding: 1px 16px;
 `;
 
-const FilterButton = styled.button`
-  width: 90%;
-  margin: 5px;
-  background-color: ${(props) =>
-    props.active ? "rgb(105, 176, 205)" : "rgb(135, 206, 235)"};
-
-  &:hover {
-    background-color: rgb(255, 255, 255, 0.3);
-  }
-`;
-
 const FilterTittle = styled.div`
   font-weight: bold;
   margin: 0px 0 10px 0;
 `;
 
 const filterByCategory = (setActiveFilters, activeFilters, id) => {
+  if (id === undefined) {
+    setActiveFilters([]);
+    return;
+  }
+
   if (activeFilters.includes(id)) {
     setActiveFilters(
       activeFilters.filter((activeFilter) => activeFilter !== id)
     );
-    console.log(`removed category id:${id}`);
-  } else {
-    setActiveFilters([id, ...activeFilters]);
-    console.log(`added category id:${id}`);
+
+    return;
   }
+
+  setActiveFilters([id, ...activeFilters]);
 };
 
 const ProductList = () => {
+  const [page, setPage] = useState(1);
   const [searchParams] = useSearchParams();
   const categoryFilter = searchParams.get("category");
 
@@ -56,22 +52,22 @@ const ProductList = () => {
     categoryFilter !== null ? [categoryFilter] : []
   );
 
-  const { data: productsData, isLoading: isLoadingProducts } = useProducts();
+  const {
+    productsData,
+    categoriesData,
+    isLoadingProducts,
+    isLoadingCategories,
+  } = usePopulateProducsWithCategories(useProducts, page);
 
-  const { data: categoriesData, isLoading: isLoadingCategories } =
-    useProductCategories();
-
-  let filteredProducts = [];
+  let filteredProducts = { results: [] };
 
   if (isLoadingProducts === false) {
-    filteredProducts = {
-      results:
-        activeFilters.length === 0
-          ? productsData.results
-          : productsData.results.filter((product) =>
-              activeFilters.includes(product.data.category.id)
-            ),
-    };
+    filteredProducts.results =
+      activeFilters.length === 0
+        ? productsData.results
+        : productsData.results.filter((product) =>
+            activeFilters.includes(product.data.category.id)
+          );
   }
 
   return (
@@ -79,28 +75,23 @@ const ProductList = () => {
       <Sidebar>
         <FilterTittle>Filters</FilterTittle>
         <div>
-          {isLoadingCategories
-            ? null
-            : categoriesData.results.map((category) => (
-                <div key={category.id}>
-                  <FilterButton
-                    onClick={() =>
-                      filterByCategory(
-                        setActiveFilters,
-                        activeFilters,
-                        category.id
-                      )
-                    }
-                    active={activeFilters.includes(category.id)}
-                  >
-                    {category.data.name}
-                  </FilterButton>
-                </div>
-              ))}
+          {!isLoadingCategories && (
+            <CategoryFilters
+              {...{
+                categories: categoriesData.results,
+                activeFilters,
+                filterCallback: (categoryId) => {
+                  filterByCategory(setActiveFilters, activeFilters, categoryId);
+                },
+              }}
+            />
+          )}
         </div>
       </Sidebar>
       <Content>
-        <Grid gridItems={filteredProducts}></Grid>
+        {!isLoadingProducts && (
+          <Grid {...{ gridItems: filteredProducts, page, setPage }} />
+        )}
       </Content>
     </>
   );

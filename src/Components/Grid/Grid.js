@@ -9,7 +9,18 @@ const GridContainer = styled.div`
   min-width: 0;
 `;
 
-const Grid = ({ gridItems }) => {
+const PaginationArrow = styled.button`
+  border-radius: 10px;
+  font-weight: bold;
+  background-color: #d3eafd;
+`;
+
+const PaginationLabel = styled.span`
+  font-weight: bold;
+  margin: 0 10px 0 10px;
+`;
+
+const Grid = ({ gridItems, page, setPage }) => {
   return (
     <div>
       <GridContainer>
@@ -18,11 +29,17 @@ const Grid = ({ gridItems }) => {
             <GridItem key={gridItem.id} {...gridItem} />
           ))}
       </GridContainer>
-      <div>
-        <button>&lt;</button>
-        <span>1</span>
-        <button>&gt;</button>
-      </div>
+      {page !== undefined && (
+        <div>
+          <PaginationArrow onClick={() => setPage(page - 1)}>
+            &lt;
+          </PaginationArrow>
+          <PaginationLabel>{page}</PaginationLabel>
+          <PaginationArrow onClick={() => setPage(page + 1)}>
+            &gt;
+          </PaginationArrow>
+        </div>
+      )}
     </div>
   );
 };
