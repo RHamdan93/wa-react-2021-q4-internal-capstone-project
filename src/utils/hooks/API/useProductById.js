@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { API_BASE_URL } from "../constants";
+import { API_BASE_URL } from "../../constants";
 import { useLatestAPI } from "./useLatestAPI";
 
-export function useProductCategories() {
+export function useProductById(productId) {
   const { ref: apiRef, isLoading: isApiMetadataLoading } = useLatestAPI();
   const [featuredBanners, setFeaturedBanners] = useState(() => ({
     data: {},
@@ -22,8 +22,8 @@ export function useProductCategories() {
 
         const response = await fetch(
           `${API_BASE_URL}/documents/search?ref=${apiRef}&q=${encodeURIComponent(
-            '[[at(document.type, "category")]]'
-          )}&lang=en-us&pageSize=30`,
+            `[[at(document.id,"${productId}")]]`
+          )}`,
           {
             signal: controller.signal,
           }
@@ -42,7 +42,7 @@ export function useProductCategories() {
     return () => {
       controller.abort();
     };
-  }, [apiRef, isApiMetadataLoading]);
+  }, [apiRef, isApiMetadataLoading, productId]);
 
   return featuredBanners;
 }

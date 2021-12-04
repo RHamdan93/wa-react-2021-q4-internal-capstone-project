@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
-import { API_BASE_URL } from '../constants';
-import { useLatestAPI } from './useLatestAPI';
+import { useState, useEffect } from "react";
+import { API_BASE_URL } from "../../constants";
+import { useLatestAPI } from "./useLatestAPI";
 
-export function useFeaturedBanners() {
+export function useProducts(page) {
   const { ref: apiRef, isLoading: isApiMetadataLoading } = useLatestAPI();
   const [featuredBanners, setFeaturedBanners] = useState(() => ({
     data: {},
@@ -22,8 +22,8 @@ export function useFeaturedBanners() {
 
         const response = await fetch(
           `${API_BASE_URL}/documents/search?ref=${apiRef}&q=${encodeURIComponent(
-            '[[at(document.type, "banner")]]'
-          )}&lang=en-us&pageSize=5`,
+            '[[at(document.type, "product")]]'
+          )}&lang=en-us&pageSize=12&page=${page}`,
           {
             signal: controller.signal,
           }
@@ -42,7 +42,7 @@ export function useFeaturedBanners() {
     return () => {
       controller.abort();
     };
-  }, [apiRef, isApiMetadataLoading]);
+  }, [apiRef, isApiMetadataLoading, page]);
 
   return featuredBanners;
 }
