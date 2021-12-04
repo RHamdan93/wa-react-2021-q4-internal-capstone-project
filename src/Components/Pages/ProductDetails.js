@@ -3,23 +3,10 @@ import { useParams } from "react-router-dom";
 import { useProductById } from "../../utils/hooks/API/useProductById";
 import { useProductCategories } from "../../utils/hooks/API/useProductCategories";
 import Slideshow from "../Slider/Slideshow";
-
-const ShopcartButton = styled.button`
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 5px 20px 5px 20px;
-  background-color: rgba(0, 150, 255, 0.8);
-  font-size: 20px;
-  font-weight: bold;
-  text-decoration: none;
-  color: black;
-  border-radius: 15px;
-
-  &:hover {
-    background-color: rgba(0, 150, 255, 0.2);
-  }
-`;
+import ShoppingCartContext from "../../state/ShoppingCartContext";
+import { useState, useContext } from "react";
+import ShopcartButton from "../ShopcartButton/ShopcartButton";
+import { usePopulateProducsWithCategories } from "../../utils/usePopulateProducsWithCategories";
 
 const ProductLabel = styled.label`
   display: block;
@@ -27,58 +14,57 @@ const ProductLabel = styled.label`
 
 const ProductDetails = () => {
   const params = useParams();
-
-  const { data: categoriesData, isLoading: isLoadingCategories } =
-    useProductCategories();
+  const [quantity, setQuantity] = useState(1);
+  const { setItems } = useContext(ShoppingCartContext);
 
   const {
-    data: { results },
-    isLoading: isLoadingProduct,
-  } = useProductById(params.productId);
+    productsData: { results },
+    isLoadingProducts,
+    isLoadingCategories,
+  } = usePopulateProducsWithCategories(useProductById, params.productId);
 
   let productSlides = [];
   let product = null;
+  let productData = null;
 
-  let category = "";
-
-  if (isLoadingProduct === false) {
-    let [{ data: productData }] = results;
-
-    product = productData;
+  if (isLoadingProducts === false) {
+    [product] = results;
+    ({ data: productData } = product);
 
     productSlides = productData.images.map(({ image }) => ({
       text: "",
       url: image.url,
       alt: image.alt,
     }));
-
-    if (isLoadingCategories === false) {
-      let productCategory = categoriesData.results.find(
-        (category) => category.id === productData.category.id
-      );
-      category = productCategory.data.name;
-    }
   }
 
   return (
     <>
-      {!isLoadingProduct && (
+      {!isLoadingProducts && (
         <>
           <Slideshow slides={productSlides}></Slideshow>
-          <ProductLabel>{product.name}</ProductLabel>
-          <ProductLabel>{product.price}</ProductLabel>
-          <ProductLabel>SKU: {product.sku}</ProductLabel>
-          <ProductLabel>Category: {category}</ProductLabel>
+          <ProductLabel>{productData.name}</ProductLabel>
+          <ProductLabel>${productData.price}</ProductLabel>
+          <ProductLabel>SKU: {productData.sku}</ProductLabel>
+          <ProductLabel>Stock: {productData.stock}</ProductLabel>
+          {!isLoadingCategories && (
+            <ProductLabel>Category: {productData.category.name}</ProductLabel>
+          )}
           <ProductLabel>
             Labels:
-            {results[0].tags.map((tag, idx) => (
-              <label key={idx}>{tag},</label>
+            {product.tags.map((tag, idx) => (
+              <label key={idx}>{` ${tag},`}</label>
             ))}
           </ProductLabel>
-          <p>{product.description[0].text}</p>
+          <p>{productData.description[0].text}</p>
           <label>Quantity:</label>
-          <input type="number" defaultValue="1" />
-          <ShopcartButton className="fas fa-cart-plus" />
+          <input
+            type="number"
+            defaultValue="1"
+            min="1"
+            onInput={(event) => setQuantity(parseInt(event.target.value))}
+          />
+          <ShopcartButton {...{ product, quantity }} />
           <table>
             <thead>
               <tr>
@@ -87,7 +73,7 @@ const ProductDetails = () => {
               </tr>
             </thead>
             <tbody>
-              {product.specs.map((spec, idx) => (
+              {productData.specs.map((spec, idx) => (
                 <tr key={idx}>
                   <td>{spec.spec_name}</td>
                   <td>{spec.spec_value}</td>

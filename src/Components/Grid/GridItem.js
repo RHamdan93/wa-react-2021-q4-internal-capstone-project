@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import ShopcartButton from "../ShopcartButton/ShopcartButton";
 
 const GridItemDiv = styled.div`
   background-color: rgba(255, 255, 255, 0.8);
@@ -33,24 +34,12 @@ const GridItemTittle = styled(GridItemSection)`
   font-weight: bold;
 `;
 
-const ShopcartButton = styled.button`
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 5px 20px 5px 20px;
-  background-color: rgba(0, 150, 255, 0.8);
-  font-size: 20px;
-  font-weight: bold;
-  text-decoration: none;
-  color: black;
-  border-radius: 15px;
+const GridItem = (product) => {
+  let {
+    id,
+    data: { name, category, price, mainimage },
+  } = product;
 
-  &:hover {
-    background-color: rgba(0, 150, 255, 0.2);
-  }
-`;
-
-const GridItem = ({ id, data: { name, category, price, mainimage } }) => {
   return (
     <GridItemDiv>
       <GridItemTittle>{name}</GridItemTittle>
@@ -60,7 +49,7 @@ const GridItem = ({ id, data: { name, category, price, mainimage } }) => {
         <Link to={`/products/${id}`}>
           <img src={mainimage.url} alt={mainimage.alt} />
         </Link>
-        <ShopcartButton className="fas fa-cart-plus"></ShopcartButton>
+        <ShopcartButton {...{ product, quantity: 1 }}></ShopcartButton>
       </GridItemSection>
     </GridItemDiv>
   );
