@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import ShoppingCartContext from "../../state/ShoppingCartContext";
 import { useContext } from "react";
+import { Link } from "react-router-dom";
 
 const ShopcartItemCountBadge = styled.div`
   background-color: red;
@@ -22,6 +23,7 @@ const ShopcartIcon = styled.i`
   position: relative;
   color: white;
   text-shadow: 2px 2px 2px rgb(0, 0, 0);
+  cursor: pointer;
 `;
 
 const ShoppingCartBadge = () => {
@@ -29,15 +31,17 @@ const ShoppingCartBadge = () => {
 
   return (
     <div>
-      <ShopcartIcon className="fas fa-shopping-cart">
-        {items.length > 0 && (
-          <ShopcartItemCountBadge>
-            {items
-              .map((item) => item.quantity)
-              .reduce((acumulator, current) => acumulator + current)}
-          </ShopcartItemCountBadge>
-        )}
-      </ShopcartIcon>
+      <Link to="/cart">
+        <ShopcartIcon className="fas fa-shopping-cart">
+          {items.length > 0 && (
+            <ShopcartItemCountBadge>
+              {items
+                .map((item) => item.quantity)
+                .reduce((acumulator, current) => acumulator + current)}
+            </ShopcartItemCountBadge>
+          )}
+        </ShopcartIcon>
+      </Link>
     </div>
   );
 };

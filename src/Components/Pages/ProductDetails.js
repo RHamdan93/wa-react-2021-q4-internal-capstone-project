@@ -2,8 +2,7 @@ import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { useProductById } from "../../utils/hooks/API/useProductById";
 import Slideshow from "../Slider/Slideshow";
-import ShoppingCartContext from "../../state/ShoppingCartContext";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import ShopcartButton from "../ShopcartButton/ShopcartButton";
 import { usePopulateProducsWithCategories } from "../../utils/usePopulateProducsWithCategories";
 
@@ -14,7 +13,6 @@ const ProductLabel = styled.label`
 const ProductDetails = () => {
   const params = useParams();
   const [quantity, setQuantity] = useState(1);
-  const { setItems } = useContext(ShoppingCartContext);
 
   const {
     productsData: { results },

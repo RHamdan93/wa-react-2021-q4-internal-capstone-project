@@ -8,7 +8,7 @@ import { useState } from "react";
 
 function App() {
   const [items, setItems] = useState([]);
-  console.log(items);
+
   return (
     <Router>
       <div className="App">

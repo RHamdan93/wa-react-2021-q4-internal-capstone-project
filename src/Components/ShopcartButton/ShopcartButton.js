@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import ShoppingCartContext from "../../state/ShoppingCartContext";
 import { useContext } from "react";
+import replaceInArray from "../../utils/replaceInArray";
 
 const AddToShopcartButton = styled.button`
   display: block;
@@ -36,20 +37,15 @@ const ShopcartButton = ({ product, quantity: addedQuantity }) => {
       };
       setItems([...items, newShopcartRecord]);
     } else {
-      setItems([
-        ...items.slice(0, shopcartRecordIdx),
-        {
-          ...items[shopcartRecordIdx],
-          quantity: Math.min(
-            product.data.stock,
-            items[shopcartRecordIdx].quantity + addedQuantity
-          ),
-        },
-        ...items.slice(
-          Math.min(items.length, shopcartRecordIdx + 1),
-          items.length
+      let updatedItem = {
+        ...items[shopcartRecordIdx],
+        quantity: Math.min(
+          product.data.stock,
+          items[shopcartRecordIdx].quantity + addedQuantity
         ),
-      ]);
+      };
+
+      setItems(replaceInArray(updatedItem, shopcartRecordIdx, items));
     }
   };
   const { items, setItems } = useContext(ShoppingCartContext);

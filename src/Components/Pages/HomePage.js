@@ -16,6 +16,7 @@ const AllProductsLink = styled(Link)`
   text-decoration: none;
   color: black;
   border-radius: 15px;
+  cursor: pointer;
 
   &:hover {
     background-color: rgba(255, 255, 255, 0.5);
