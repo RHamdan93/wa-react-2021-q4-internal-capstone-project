@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
-import { useProductById } from "../../utils/hooks/API/useProductById";
-import Slideshow from "../Slider/Slideshow";
+import { useProductById } from "../../../utils/hooks/API/useProductById";
+import Slideshow from "../../Slider/Slideshow";
 import { useState } from "react";
-import ShopcartButton from "../ShopcartButton/ShopcartButton";
-import { usePopulateProducsWithCategories } from "../../utils/usePopulateProducsWithCategories";
+import ShopcartButton from "../../ShopcartButton/ShopcartButton";
+import { usePopulateProducsWithCategories } from "../../../utils/usePopulateProducsWithCategories";
+import ProductDetailsSpecs from "./ProductDetailsSpecs";
 
 const ProductLabel = styled.label`
   display: block;
@@ -49,9 +50,7 @@ const ProductDetails = () => {
           )}
           <ProductLabel>
             Labels:
-            {product.tags.map((tag, idx) => (
-              <label key={idx}>{` ${tag},`}</label>
-            ))}
+            {results[0].tags.join(", ")}
           </ProductLabel>
           <p>{productData.description[0].text}</p>
           <label>Quantity:</label>
@@ -62,22 +61,7 @@ const ProductDetails = () => {
             onInput={(event) => setQuantity(parseInt(event.target.value))}
           />
           <ShopcartButton {...{ product, quantity }} />
-          <table>
-            <thead>
-              <tr>
-                <th>Spec</th>
-                <th>Value</th>
-              </tr>
-            </thead>
-            <tbody>
-              {productData.specs.map((spec, idx) => (
-                <tr key={idx}>
-                  <td>{spec.spec_name}</td>
-                  <td>{spec.spec_value}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <ProductDetailsSpecs {...{ specs: productData.specs }} />
         </>
       )}
     </>

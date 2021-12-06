@@ -1,7 +1,7 @@
 import "./Content.css";
 import HomePage from "../Pages/HomePage";
 import ProductList from "../Pages/ProductList";
-import ProductDetails from "../Pages/ProductDetails";
+import ProductDetails from "../Pages/ProductDetails/ProductDetails";
 import SearchResults from "../Pages/SearchResults";
 import ShoppingCart from "../Pages/ShoppingCart";
 import Checkout from "../Pages/Checkout";

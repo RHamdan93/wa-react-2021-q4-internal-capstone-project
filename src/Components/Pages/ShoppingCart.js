@@ -94,9 +94,11 @@ const ShoppingCart = () => {
             .map(({ product, quantity }) => product.data.price * quantity)
             .reduce((sum, current) => (sum += current), 0)}
         </span>
-        <ProceedToCheckoutButton to="/checkout">
-          Proceed to checkout
-        </ProceedToCheckoutButton>
+        <div>
+          <ProceedToCheckoutButton to="/checkout">
+            Proceed to checkout
+          </ProceedToCheckoutButton>
+        </div>
       </div>
     </div>
   );

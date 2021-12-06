@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import Slide from "./Slide";
 
 const SlideshowContainer = styled.div`
   margin: 20px auto;
@@ -54,19 +54,12 @@ function Slideshow({ slides }) {
   return (
     <SlideshowContainer>
       <SlideshowSlider index={index}>
-        {slides.map((slide, index) =>
-          slide.navigateTo === undefined ? (
-            <div key={index}>
-              <img src={slide.url} alt={slide.alt} />
-              <SlideText>{slide.text.toUpperCase()}</SlideText>
-            </div>
-          ) : (
-            <Link as="div" to={slide.navigateTo} key={index}>
-              <img src={slide.url} alt={slide.alt} />
-              <SlideText>{slide.text.toUpperCase()}</SlideText>
-            </Link>
-          )
-        )}
+        {slides.map((slide, index) => (
+          <Slide key={index} {...{ navigateTo: slide.navigateTo }}>
+            <img src={slide.url} alt={slide.alt} />
+            <SlideText>{slide.text.toUpperCase()}</SlideText>
+          </Slide>
+        ))}
       </SlideshowSlider>
 
       <div>

@@ -21,27 +21,29 @@ const PaginationLabel = styled.span`
 `;
 
 const Grid = ({ gridItems, page, setPage }) => {
-  return (
-    <div>
-      <GridContainer>
-        {gridItems.results !== undefined &&
-          gridItems.results.map((gridItem) => (
-            <GridItem key={gridItem.id} {...gridItem} />
-          ))}
-      </GridContainer>
-      {page !== undefined && (
-        <div>
-          <PaginationArrow onClick={() => setPage(page - 1)}>
-            &lt;
-          </PaginationArrow>
-          <PaginationLabel>{page}</PaginationLabel>
-          <PaginationArrow onClick={() => setPage(page + 1)}>
-            &gt;
-          </PaginationArrow>
-        </div>
-      )}
-    </div>
-  );
+let showResults = gridItems.results !== undefined;
+
+return (
+  <div>
+    <GridContainer>
+      {showResults &&
+        gridItems.results.map((gridItem) => (
+          <GridItem key={gridItem.id} {...gridItem} />
+        ))}
+    </GridContainer>
+    {page !== undefined && (
+      <div>
+        <PaginationArrow onClick={() => setPage(page - 1)}>
+          &lt;
+        </PaginationArrow>
+        <PaginationLabel>{page}</PaginationLabel>
+        <PaginationArrow onClick={() => setPage(page + 1)}>
+          &gt;
+        </PaginationArrow>
+      </div>
+    )}
+  </div>
+);
 };
 
 export default Grid;

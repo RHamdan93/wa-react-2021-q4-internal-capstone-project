@@ -1,32 +1,56 @@
 import ShoppingCartContext from "../../state/ShoppingCartContext";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-/*
-4.2. This page should contain the following blocks:
-4.2.1. A Form to capture the customer information for their order considering the following:
-4.2.1.1. A text input to capture the name of the customer
-4.2.1.2. A text input to capture the email of the customer
-4.2.1.3. A text input to capture the post/zip code of the customer
-4.2.1.4. A textarea to capture the order notes
-4.2.2. An order summary table to display the items added to the cart and you should build it considering the following:
-4.2.2.1. There should be a row in this table per item/product in the cart.
-4.2.2.2. Each row should only show the name of the product, number of items added to cart and the subtotal (unit price x quantity).
-4.2.2.3. At the bottom of the table there should be a label to display the cart total (sum of the subtotal’s column) and two buttons, one for “Place order” and the other for “Go back to cart”
-*/
+import styled from "styled-components";
+
+const CheckoutContainer = styled.div`
+  padding: 0 0 10% 0;
+  margin: 0 10% 0 10%;
+`;
+
+const TransparentLink = styled(Link)`
+  display: inline-block;
+  margin: 20px 0 20px 0;
+  padding: 5px 20px 5px 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  font-size: 20px;
+  font-weight: bold;
+  text-decoration: none;
+  color: black;
+  border-radius: 15px;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+`;
+
+const LinksContainter = styled.div`
+  display: flex;
+  justify-content: space-around;
+`;
+
 const Checkout = () => {
   const { items } = useContext(ShoppingCartContext);
 
   return (
-    <div>
+    <CheckoutContainer>
       <form>
-        <label>Name:</label>
-        <input />
-        <label>Email:</label>
-        <input />
-        <label>Zip code:</label>
-        <input />
-        <label>Order notes:</label>
-        <input />
+        <div>
+          <label>Name:</label>
+          <input />
+        </div>
+        <div>
+          <label>Email:</label>
+          <input />
+        </div>
+        <div>
+          <label>Zip code:</label>
+          <input />
+        </div>
+        <div>
+          <label>Order notes:</label>
+          <input />
+        </div>
         <label>Order Summary:</label>
         <table>
           <thead>
@@ -54,10 +78,12 @@ const Checkout = () => {
             </tr>
           </tbody>
         </table>
-        <Link to="/cart">Go back to cart</Link>
-        <button>Place Order</button>
+        <LinksContainter>
+          <TransparentLink to="/cart">Go back to cart</TransparentLink>
+          <TransparentLink to="/checkout">Place Order</TransparentLink>
+        </LinksContainter>
       </form>
-    </div>
+    </CheckoutContainer>
   );
 };
 
