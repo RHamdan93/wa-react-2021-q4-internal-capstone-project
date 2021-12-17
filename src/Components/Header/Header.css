@@ -1,8 +1,9 @@
+
 .topBar {
     padding: 10px;
     display: flex;
     flex-direction: row;
-    background: tomato;
+    background: #2196f3;
   }
   
   .topBar-title {
@@ -19,15 +20,11 @@
     background-color: transparent;
     cursor: pointer;
     text-decoration: none;
-    color: black;
+    color: white;
+    text-shadow: 2px 2px 2px rgb(0, 0, 0);
+    cursor: pointer;
   }
   
   .topBar > div{
     flex-grow: 2;
-  }
-  
-  .topBar > i {
-    padding: 0 5px 0 10px;
-    margin: auto;
-    font-size: 200%;
   }
