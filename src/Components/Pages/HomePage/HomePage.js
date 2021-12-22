@@ -1,10 +1,10 @@
-import Slideshow from "../Slider/Slideshow";
-import Grid from "../Grid/Grid";
+import Slideshow from "../../Slider/Slideshow";
+import Grid from "../../Grid/Grid";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { useFeaturedBanners } from "../../utils/hooks/API/useFeaturedBanners";
-import { useFeaturedProducts } from "../../utils/hooks/API/useFeaturedProducts";
-import { usePopulateProducsWithCategories } from "../../utils/usePopulateProducsWithCategories";
+import { useFeaturedBanners } from "../../../utils/hooks/API/useFeaturedBanners";
+import { useFeaturedProducts } from "../../../utils/hooks/API/useFeaturedProducts";
+import { usePopulateProducsWithCategories } from "../../../utils/usePopulateProducsWithCategories";
 
 const AllProductsLink = styled(Link)`
   display: inline-block;
@@ -56,8 +56,11 @@ const HomePage = () => {
 
   return (
     <>
-      <Slideshow slides={featuredBannersSlides} />
-      <Slideshow slides={productCategoriesSlides} />
+      <Slideshow slides={featuredBannersSlides} aria-label="featured banners" />
+      <Slideshow
+        slides={productCategoriesSlides}
+        aria-label="product categories"
+      />
       {!isLoadingProducts && <Grid {...{ gridItems: productsData }} />}
       <AllProductsLink to="/products">View All Products</AllProductsLink>
     </>

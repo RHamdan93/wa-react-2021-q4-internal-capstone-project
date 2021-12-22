@@ -1,7 +1,7 @@
-import ShoppingCartContext from "../../state/ShoppingCartContext";
+import ShoppingCartContext from "../../../state/ShoppingCartContext";
 import { useContext } from "react";
 import styled from "styled-components";
-import replaceInArray from "../../utils/replaceInArray";
+import replaceInArray from "../../../utils/replaceInArray";
 import { Link } from "react-router-dom";
 
 const ProductThumbnail = styled.img`

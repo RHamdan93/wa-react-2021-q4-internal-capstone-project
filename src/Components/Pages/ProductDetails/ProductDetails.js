@@ -7,7 +7,7 @@ import ShopcartButton from "../../ShopcartButton/ShopcartButton";
 import { usePopulateProducsWithCategories } from "../../../utils/usePopulateProducsWithCategories";
 import ProductDetailsSpecs from "./ProductDetailsSpecs";
 
-const ProductLabel = styled.label`
+const ProductLabel = styled.span`
   display: block;
 `;
 
@@ -53,8 +53,9 @@ const ProductDetails = () => {
             {results[0].tags.join(", ")}
           </ProductLabel>
           <p>{productData.description[0].text}</p>
-          <label>Quantity:</label>
+          <label for="quantity">Quantity:</label>
           <input
+            id="quantity"
             type="number"
             defaultValue="1"
             min="1"
