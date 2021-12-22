@@ -4,9 +4,10 @@ import { useLatestAPI } from "./useLatestAPI";
 
 export function useFeaturedProducts() {
   const { ref: apiRef, isLoading: isApiMetadataLoading } = useLatestAPI();
-  const [featuredBanners, setFeaturedBanners] = useState(() => ({
+  const [featuredProducts, setFeaturedProducts] = useState(() => ({
     data: {},
     isLoading: true,
+    abort: null,
   }));
 
   useEffect(() => {
@@ -16,9 +17,12 @@ export function useFeaturedProducts() {
 
     const controller = new AbortController();
 
-    async function getFeaturedBanners() {
+    async function getFeaturedProducts() {
       try {
-        setFeaturedBanners({ data: {}, isLoading: true });
+        setFeaturedProducts({
+          data: {},
+          isLoading: true,
+        });
 
         const response = await fetch(
           `${API_BASE_URL}/documents/search?ref=${apiRef}&q=${encodeURIComponent(
@@ -31,19 +35,25 @@ export function useFeaturedProducts() {
         );
         const data = await response.json();
 
-        setFeaturedBanners({ data, isLoading: false });
+        setFeaturedProducts({
+          data,
+          isLoading: false,
+        });
       } catch (err) {
-        setFeaturedBanners({ data: {}, isLoading: false });
+        setFeaturedProducts({
+          data: {},
+          isLoading: false,
+        });
         console.error(err);
       }
     }
 
-    getFeaturedBanners();
+    getFeaturedProducts();
 
     return () => {
       controller.abort();
     };
   }, [apiRef, isApiMetadataLoading]);
 
-  return featuredBanners;
+  return featuredProducts;
 }

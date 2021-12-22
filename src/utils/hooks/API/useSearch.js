@@ -21,9 +21,12 @@ export function useSearch(searchCriteria, page = 1) {
         setSearchResults({ data: {}, isLoading: true });
 
         const response = await fetch(
-          `${API_BASE_URL}/documents/search?ref=${apiRef}&q=${encodeURIComponent(
-            `[[at(document.type, "product")]]&q=[[fulltext(document, "${searchCriteria}")]]`
-          )}&lang=en-us&pageSize=20&page=${page}`,
+          `${API_BASE_URL}/documents/search?ref=${apiRef}
+          &q=${encodeURIComponent(`[[at(document.type, "product")]]`)}
+          &q=${encodeURIComponent(
+            `[[fulltext(document, "${searchCriteria}")]]`
+          )}
+          &lang=en-us&pageSize=20&page=${page}`,
           {
             signal: controller.signal,
           }
