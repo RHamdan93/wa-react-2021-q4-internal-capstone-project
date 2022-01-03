@@ -24,37 +24,39 @@ const AddToShopcartButton = styled.button`
   }
 `;
 
+const addItemToShopcart = (product, addedQuantity, shopCartItems) => {
+  let shopcartRecordIdx = shopCartItems.findIndex(
+    (item) => item.product.id === product.id
+  );
+
+  if (shopcartRecordIdx < 0) {
+    let newShopcartRecord = {
+      quantity: Math.min(product.data.stock, addedQuantity),
+      product: product,
+    };
+    return [...shopCartItems, newShopcartRecord];
+  } else {
+    let updatedItem = {
+      ...shopCartItems[shopcartRecordIdx],
+      quantity: Math.min(
+        product.data.stock,
+        shopCartItems[shopcartRecordIdx].quantity + addedQuantity
+      ),
+    };
+
+    return replaceInArray(updatedItem, shopcartRecordIdx, shopCartItems);
+  }
+};
+
 const ShopcartButton = ({ product, quantity: addedQuantity }) => {
-  const addItemToShopcart = () => {
-    let shopcartRecordIdx = items.findIndex(
-      (item) => item.product.id === product.id
-    );
-
-    if (shopcartRecordIdx < 0) {
-      let newShopcartRecord = {
-        quantity: Math.min(product.data.stock, addedQuantity),
-        product: product,
-      };
-      setItems([...items, newShopcartRecord]);
-    } else {
-      let updatedItem = {
-        ...items[shopcartRecordIdx],
-        quantity: Math.min(
-          product.data.stock,
-          items[shopcartRecordIdx].quantity + addedQuantity
-        ),
-      };
-
-      setItems(replaceInArray(updatedItem, shopcartRecordIdx, items));
-    }
-  };
   const { items, setItems } = useContext(ShoppingCartContext);
 
   return (
     <AddToShopcartButton
+      aria-label="add to cart"
       className="fas fa-cart-plus"
       disabled={product.data.stock === 0}
-      onClick={() => addItemToShopcart()}
+      onClick={() => setItems(addItemToShopcart(product, addedQuantity, items))}
     ></AddToShopcartButton>
   );
 };

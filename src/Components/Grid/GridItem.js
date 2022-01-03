@@ -3,13 +3,13 @@ import ShopcartButton from "../ShopcartButton/ShopcartButton";
 import { GridItemDiv, GridItemSection, GridItemTitle } from "./GridItem.styles";
 
 const GridItem = (product) => {
-  let {
+  const {
     id,
     data: { name, category, price, mainimage },
   } = product;
 
   return (
-    <GridItemDiv>
+    <GridItemDiv role="gridcell">
       <GridItemTitle>{name}</GridItemTitle>
       <GridItemSection>{`Category: ${category.name}`}</GridItemSection>
       <GridItemSection>{`$${price}`}</GridItemSection>

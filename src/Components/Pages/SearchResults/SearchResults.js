@@ -1,7 +1,7 @@
-import { useSearch } from "../../utils/hooks/API/useSearch";
+import { useSearch } from "../../../utils/hooks/API/useSearch";
 import { useState } from "react";
-import { usePopulateProducsWithCategories } from "../../utils/usePopulateProducsWithCategories";
-import Grid from "../Grid/Grid";
+import { usePopulateProducsWithCategories } from "../../../utils/usePopulateProducsWithCategories";
+import Grid from "../../Grid/Grid";
 import { useSearchParams } from "react-router-dom";
 
 const SearchResults = () => {
@@ -18,10 +18,10 @@ const SearchResults = () => {
   return (
     <>
       {!isLoadingProducts &&
-        (productsData.results.length === 0 ? (
-          <div>There are no results that match your search</div>
-        ) : (
+        (productsData.results.length > 0 ? (
           <Grid {...{ gridItems: productsData, page, setPage }} />
+        ) : (
+          <div>There are no results that match your search</div>
         ))}
       {isLoadingProducts && <div>Loading...</div>}
     </>

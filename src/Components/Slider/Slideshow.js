@@ -48,11 +48,11 @@ const SlideText = styled.div`
   font-size: 1.2em;
 `;
 
-function Slideshow({ slides }) {
+function Slideshow({ slides, ...rest }) {
   const [index, setIndex] = React.useState(0);
 
   return (
-    <SlideshowContainer>
+    <SlideshowContainer role="list" {...rest}>
       <SlideshowSlider index={index}>
         {slides.map((slide, index) => (
           <Slide key={index} {...{ navigateTo: slide.navigateTo }}>

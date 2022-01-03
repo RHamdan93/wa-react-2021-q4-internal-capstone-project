@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { useProducts } from "../../utils/hooks/API/useProducts";
-import { usePopulateProducsWithCategories } from "../../utils/usePopulateProducsWithCategories";
+import { useProducts } from "../../../utils/hooks/API/useProducts";
+import { usePopulateProducsWithCategories } from "../../../utils/usePopulateProducsWithCategories";
 import styled from "styled-components";
-import Grid from "../Grid/Grid";
-import CategoryFilters from "../CategoryFilter/CategoryFilters";
+import Grid from "../../Grid/Grid";
+import CategoryFilters from "../../CategoryFilter/CategoryFilters";
 
 const Sidebar = styled.div`
   height: 100%;
@@ -59,7 +59,7 @@ const ProductList = () => {
     isLoadingCategories,
   } = usePopulateProducsWithCategories(useProducts, page);
 
-  let filteredProducts = { results: [] };
+  let filteredProducts = { ...productsData, results: [] };
 
   if (isLoadingProducts === false) {
     filteredProducts.results =
@@ -74,19 +74,17 @@ const ProductList = () => {
     <>
       <Sidebar>
         <FilterTittle>Filters</FilterTittle>
-        <div>
-          {!isLoadingCategories && (
-            <CategoryFilters
-              {...{
-                categories: categoriesData.results,
-                activeFilters,
-                filterCallback: (categoryId) => {
-                  filterByCategory(setActiveFilters, activeFilters, categoryId);
-                },
-              }}
-            />
-          )}
-        </div>
+        {!isLoadingCategories && (
+          <CategoryFilters
+            {...{
+              categories: categoriesData.results,
+              activeFilters,
+              filterCallback: (categoryId) => {
+                filterByCategory(setActiveFilters, activeFilters, categoryId);
+              },
+            }}
+          />
+        )}
       </Sidebar>
       <Content>
         {!isLoadingProducts && (

@@ -4,9 +4,10 @@ import { useLatestAPI } from "./useLatestAPI";
 
 export function useProductCategories() {
   const { ref: apiRef, isLoading: isApiMetadataLoading } = useLatestAPI();
-  const [featuredBanners, setFeaturedBanners] = useState(() => ({
+  const [productCategories, setProductCategories] = useState(() => ({
     data: {},
     isLoading: true,
+    abort: null,
   }));
 
   useEffect(() => {
@@ -16,9 +17,12 @@ export function useProductCategories() {
 
     const controller = new AbortController();
 
-    async function getFeaturedBanners() {
+    async function getProductCategories() {
       try {
-        setFeaturedBanners({ data: {}, isLoading: true });
+        setProductCategories({
+          data: {},
+          isLoading: true,
+        });
 
         const response = await fetch(
           `${API_BASE_URL}/documents/search?ref=${apiRef}&q=${encodeURIComponent(
@@ -30,19 +34,25 @@ export function useProductCategories() {
         );
         const data = await response.json();
 
-        setFeaturedBanners({ data, isLoading: false });
+        setProductCategories({
+          data,
+          isLoading: false,
+        });
       } catch (err) {
-        setFeaturedBanners({ data: {}, isLoading: false });
+        setProductCategories({
+          data: {},
+          isLoading: false,
+        });
         console.error(err);
       }
     }
 
-    getFeaturedBanners();
+    getProductCategories();
 
     return () => {
       controller.abort();
     };
   }, [apiRef, isApiMetadataLoading]);
 
-  return featuredBanners;
+  return productCategories;
 }

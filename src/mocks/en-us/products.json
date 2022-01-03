@@ -3,7 +3,7 @@
   "results_per_page": 50,
   "results_size": 29,
   "total_results_size": 29,
-  "total_pages": 1,
+  "total_pages": 8,
   "next_page": null,
   "prev_page": null,
   "results": [
@@ -30,7 +30,7 @@
         "name": "Tallulah Sofa Gray",
         "sku": "1080681271",
         "category": {
-          "id": "YWHviRIAACsAyjP3",
+          "id": "YWHy0xIAACoAykKm",
           "type": "category",
           "tags": [],
           "slug": "furniture",
@@ -173,7 +173,7 @@
             }
           }
         ],
-        "stock": 4,
+        "stock": 9,
         "price": 1834.57
       }
     },
@@ -3705,7 +3705,7 @@
             }
           }
         ],
-        "stock": 7,
+        "stock": 0,
         "price": 820.7
       }
     }
