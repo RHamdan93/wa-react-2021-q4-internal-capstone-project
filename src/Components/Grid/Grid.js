@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import GridItem from "./GridItem";
+import GridPagination from "./GridPagination";
 
 const GridContainer = styled.div`
   display: grid;
@@ -9,41 +10,22 @@ const GridContainer = styled.div`
   min-width: 0;
 `;
 
-const PaginationArrow = styled.button`
-  border-radius: 10px;
-  font-weight: bold;
-  background-color: #d3eafd;
-`;
-
-const PaginationLabel = styled.span`
-  font-weight: bold;
-  margin: 0 10px 0 10px;
-`;
-
 const Grid = ({ gridItems, page, setPage }) => {
-let showResults = gridItems.results !== undefined;
-
-return (
-  <div>
-    <GridContainer>
-      {showResults &&
-        gridItems.results.map((gridItem) => (
-          <GridItem key={gridItem.id} {...gridItem} />
-        ))}
-    </GridContainer>
-    {page !== undefined && (
-      <div>
-        <PaginationArrow onClick={() => setPage(page - 1)}>
-          &lt;
-        </PaginationArrow>
-        <PaginationLabel>{page}</PaginationLabel>
-        <PaginationArrow onClick={() => setPage(page + 1)}>
-          &gt;
-        </PaginationArrow>
-      </div>
-    )}
-  </div>
-);
+  return (
+    <div role="grid">
+      <GridContainer>
+        {gridItems.results &&
+          gridItems.results.map((gridItem) => (
+            <GridItem key={gridItem.id} {...gridItem} />
+          ))}
+      </GridContainer>
+      {page && (
+        <GridPagination
+          {...{ page, setPage, totalPages: gridItems.total_pages }}
+        />
+      )}
+    </div>
+  );
 };
 
 export default Grid;

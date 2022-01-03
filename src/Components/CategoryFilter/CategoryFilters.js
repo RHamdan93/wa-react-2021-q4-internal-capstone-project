@@ -21,9 +21,9 @@ const ClearFiltersButton = styled(FilterButton)`
 
 const CategoryFilters = ({ categories, activeFilters, filterCallback }) => {
   return (
-    <div>
+    <div role="list" aria-label="filters">
       {categories.map((category) => (
-        <div key={category.id}>
+        <div key={category.id} role="listitem">
           <FilterButton
             onClick={() => filterCallback(category.id)}
             active={activeFilters.includes(category.id)}

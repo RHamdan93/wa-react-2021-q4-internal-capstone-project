@@ -56,11 +56,18 @@ const HomePage = () => {
 
   return (
     <>
-      <Slideshow slides={featuredBannersSlides} aria-label="featured banners" />
-      <Slideshow
-        slides={productCategoriesSlides}
-        aria-label="product categories"
-      />
+      {!isLoadingFeaturedBanners && (
+        <Slideshow
+          slides={featuredBannersSlides}
+          aria-label="featured banners"
+        />
+      )}
+      {!isLoadingCategories && (
+        <Slideshow
+          slides={productCategoriesSlides}
+          aria-label="product categories"
+        />
+      )}
       {!isLoadingProducts && <Grid {...{ gridItems: productsData }} />}
       <AllProductsLink to="/products">View All Products</AllProductsLink>
     </>

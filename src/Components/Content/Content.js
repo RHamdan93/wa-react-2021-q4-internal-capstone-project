@@ -1,10 +1,10 @@
 import "./Content.css";
-import HomePage from "../Pages/HomePage";
-import ProductList from "../Pages/ProductList";
+import HomePage from "../Pages/HomePage/HomePage";
+import ProductList from "../Pages/ProductList/ProductList";
 import ProductDetails from "../Pages/ProductDetails/ProductDetails";
-import SearchResults from "../Pages/SearchResults";
-import ShoppingCart from "../Pages/ShoppingCart";
-import Checkout from "../Pages/Checkout";
+import SearchResults from "../Pages/SearchResults/SearchResults";
+import ShoppingCart from "../Pages/ShoppingCart/ShoppingCart";
+import Checkout from "../Pages/Checkout/Checkout";
 import { Route, Routes } from "react-router-dom";
 
 const Content = () => {
